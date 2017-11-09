@@ -12,7 +12,7 @@ SELECT semisphere FROM area GROUP BY semisphere;
 
 --groups names of semispheres from table area
 
-SELECT name, (max_right_ascension – min_right_ascension) AS right_ascension_diam, (max_declination – min_declination) AS declination_diam FROM families;
+SELECT name, (max_right_ascension – min_right_ascension) AS raDiam, (max_declination – min_declination) AS dDiam FROM families;
 
 --prints names and differences in right ascension and declination of families 
 
