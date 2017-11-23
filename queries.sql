@@ -1,32 +1,32 @@
---Простые запросы
+--Easy queries
 
 SELECT * FROM consellations ORDER BY square;
 
---сортирует строки в таблице consellations по возрастанию площади (показаний в столбце square)
+--prints strings from table consellations sorted by square
 
-SELECT name FROM founders WHERE country = ‘Denmark’; 
+SELECT name FROM founders WHERE country = вЂDenmarkвЂ™; 
 
---выводит в таблице founders имена первооткрывателей из Дании
+--prints names of founders from Denmark
 
 SELECT semisphere FROM area GROUP BY semisphere;
 
---группирует в таблице area значения из столбца semisphere
+--groups names of semispheres from table area
 
-SELECT name, (max_right_ascension – min_right_ascension) AS right_ascension_diam, (max_declination – min_declination) AS declination_diam FROM families;
+SELECT name, (max_right_ascension вЂ“ min_right_ascension) AS right_ascension_diam, (max_declination вЂ“ min_declination) AS declination_diam FROM families;
 
---создает новые выражения из существующих в столбце 
+--prints names and differences in right ascension and declination of families 
 
 
---Средние запросы
+--Medium queries
 
 SELECT latin_name, square, name FROM consellations INNER JOIN area  ON (id_area = area.id);
 
---выводит столбцы с названиями созвездий и их площадями из таблицы consellations и столбцы с названиями областей из таблицы area
+--prints names and squares from table consellations and names of areas where they are located
 
 SELECT area.name, id_family FROM areas__families LEFT OUTER JOIN area ON (area.id = id_area) ORDER BY id_family;
 
---выводит записи из столбца id_family таблицы areas__families и соответствующие им названия областей из таблицы area, отсортированные по id_family
+--prints id of families from table areas__families and appropriate names of areas from table area, sorted by id_family
 
 SELECT families.name, id_area FROM families RIGHT OUTER JOIN areas__families ON (families.id = id_family);
 
---выводит записи из столбца id_area таблицы areas__families и соответствующие им названия семейств из таблицы families
+--prints id of areas from table areas__families and appropriate names of families
