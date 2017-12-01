@@ -5,6 +5,11 @@
 -- Dumped from database version 9.6.5
 -- Dumped by pg_dump version 9.6.5
 
+DROP DATABASE IF EXISTS database1;
+CREATE DATABASE database1;
+GRANT ALL PRIVILEGES ON DATABASE database1 TO postgres;
+\connect database1
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
