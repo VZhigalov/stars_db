@@ -1,6 +1,6 @@
 --Complicated queries
 
---1)
+--o1)
 
 SELECT name, avg_square FROM
 (SELECT a.name, count(a.id) AS quantity, avg(c.square) AS avg_square
@@ -48,13 +48,13 @@ GROUP BY a.id) AS counts);
 --prints areas with no-min count of constellations with quantity of visible stars more then 50
 
 
---2 Extra complicated queries
+--2 extra complicated queries
 
 --4)
 
-SELECT f.name AS family, count(c.id) AS number_of_constellations FROM 
-families f LEFT JOIN constellations c ON c.id_family=f.id 
-JOIN constellations__founders c_f ON ((c.id=c_f.id_constellation) AND (c_f.id_founder=6)) 
+SELECT f.name AS family, count(*) AS number_of_constellations FROM 
+families f JOIN constellations c ON c.id_family=f.id 
+JOIN constellations__founders c_f ON ((c.id=c_f.id_constellation) AND (c_f.id_founder=5)) 
 GROUP BY f.name ORDER BY number_of_constellations;
 
 --prints in which families the chosen founder explored constellations and the quantity of them
@@ -62,7 +62,7 @@ GROUP BY f.name ORDER BY number_of_constellations;
 --5)
 
 SELECT f.country, count(distinct c_f.id_constellation) FROM 
-((constellations c LEFT JOIN constellations__founders c_f ON (c.id=c_f.id_constellation AND id_area=5)) 
+((constellations c JOIN constellations__founders c_f ON (c.id=c_f.id_constellation AND id_area=6)) 
 RIGHT JOIN founders f ON id_founder=f.id) GROUP BY f.country;
 
 --prints how many constellations in the chosen area are explored by the scientists of each country
