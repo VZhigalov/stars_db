@@ -1,0 +1,48 @@
+--Easy queries
+
+1)
+
+SELECT * FROM constellations WHERE square > 600 ORDER BY square;
+
+--prints big enough constellations sorted by square
+
+2)
+
+SELECT name FROM founders WHERE country = 'Denmark'; 
+
+--prints names of founders from Denmark
+
+3)
+
+SELECT sum(quantity_of_visible_stars) AS quantity_of_visible_stars FROM constellations WHERE id_area = 1;
+
+--prints quantity of visible stars in the chosen area
+
+4)
+
+SELECT name, (max_right_ascension – min_right_ascension) AS right_ascension_diam, (max_declination – min_declination) AS declination_diam FROM families ORDER BY right_ascension_diam;
+
+--prints names and differences in right ascension and declination of families sorted by the first coordinate 
+
+
+--Medium queries
+
+1)
+
+SELECT latin_name, quantity_of_visible_stars, brightest_star, square, name AS area_name FROM constellations c JOIN area a
+ON ((semisphere = 'South') AND (c.id_area = a.id)) ORDER BY quantity_of_visible_stars DESC;
+
+--prints constellations visible from the south semisphere sorted by quantity of visible stars
+
+2)
+
+SELECT f.name AS family, sum(c.square) AS family_square FROM families f JOIN constellations c ON (f.id = c.id_family) GROUP BY f.id ORDER BY family_square DESC;
+
+--prints constellation families sorted by their total square
+
+3)
+
+SELECT f.id, f.name AS family, count(*) AS amount_of_constellations_in_family FROM families f JOIN constellations c 
+ON f.id=c.id_family GROUP BY f.id ORDER BY amount_of_constellations_in_family DESC; 
+
+--prints constellation families sorted by the amount of constellations inside

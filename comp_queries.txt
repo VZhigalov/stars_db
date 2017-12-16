@@ -1,0 +1,70 @@
+--Complicated queries
+
+--1)
+
+SELECT name, avg_square FROM
+(SELECT a.name, count(a.id) AS quantity, avg(c.square) AS avg_square
+FROM constellations AS c
+JOIN area AS a
+ON (a.id = c.id_area)
+GROUP BY a.id
+ORDER BY avg_square) AS areas
+WHERE quantity > 2;
+
+--prints areas, where count of constellations is more then 2, and average squares among constellations in areas, sorted by avg_square
+
+--2)
+
+SELECT name FROM
+(SELECT f.name, count(f.id) AS quantity
+FROM founders AS f
+JOIN constellations__founders AS c_f
+ON (f.id = c_f.id_founder)
+GROUP BY f.id) AS counts
+WHERE quantity = (SELECT max(quantity) FROM
+(SELECT f.name, count(f.id) AS quantity
+FROM founders AS f
+JOIN constellations__founders AS c_f
+ON (f.id = c_f.id_founder)
+GROUP BY f.id) AS counts);
+
+--prints scientist, founded the most of constellations
+
+--3)
+
+SELECT name, quantity FROM
+(SELECT a.name, count(a.id) AS quantity
+FROM area AS a
+JOIN constellations AS c
+ON (a.id = c.id_area) WHERE c.quantity_of_visible_stars > 50
+GROUP BY a.id) AS counts
+WHERE quantity != (SELECT min(quantity) FROM
+(SELECT a.name, count(a.id) AS quantity
+FROM area AS a
+JOIN constellations AS c
+ON (a.id = c.id_area) WHERE c.quantity_of_visible_stars > 50
+GROUP BY a.id) AS counts);
+
+--prints areas with no-min count of constellations with quantity of visible stars more then 50
+
+
+--2 Extra complicated queries
+
+--4)
+
+SELECT f.name AS family, count(c.id) AS number_of_constellations FROM 
+families f LEFT JOIN constellations c ON c.id_family=f.id 
+JOIN constellations__founders c_f ON ((c.id=c_f.id_constellation) AND (c_f.id_founder=6)) 
+GROUP BY f.name ORDER BY number_of_constellations;
+
+--prints in which families the chosen founder explored constellations and the quantity of them
+
+--5)
+
+SELECT f.country, count(distinct c_f.id_constellation) FROM 
+((constellations c LEFT JOIN constellations__founders c_f ON (c.id=c_f.id_constellation AND id_area=5)) 
+RIGHT JOIN founders f ON id_founder=f.id) GROUP BY f.country;
+
+--prints how many constellations in the chosen area are explored by the scientists of each country
+
+
